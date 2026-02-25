@@ -3,7 +3,7 @@
 Usage
 -----
 
-Reboot hexapod controller (power-cycled via PDU outlet 4) and restart its EPICS IOC.
+Reboot hexapod controller (power-cycled via PDU outlet 5) and restart its EPICS IOC.
 
 Prereqs:
   - Credentials file exists: ~/access.json
@@ -45,7 +45,7 @@ IOC_STOP_SCRIPT  = "hexapod_IOC_stop.sh"
 PV_ALL_ENABLED = "2bmHXP:HexapodAllEnabled.VAL"
 PV_ENABLE_WORK = "2bmHXP:EnableWork.PROC"
 
-HEXAPOD_OUTLET = 4
+HEXAPOD_OUTLET = 5
 
 def load_pdu_creds(pdu: str):
     pdu = pdu.lower()
@@ -144,7 +144,7 @@ def caput(pv: str, value):
     subprocess.check_call(["caput", pv, str(value)])
 
 
-def wait_for_all_enabled(timeout_s=180, poll_s=2) -> bool:
+def wait_for_all_enabled(timeout_s=180, poll_s=1) -> bool:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
         try:
@@ -162,7 +162,7 @@ def main():
     )
     ap.add_argument(
         "--pdu",
-        default="a",                    # CHANGED: default is "a"
+        default="a",
         choices=["a", "b", "A", "B"],
         help="Select PDU creds from ~/access.json (default: a)",
     )
@@ -175,9 +175,11 @@ def main():
     pdu = NetBooterHTTP(ip, user, pwd)
 
     try:
+        # ----- 1. Stop the EPICS IOC -----
         print("Stopping hexapod IOC...")
         ioc_stop()
 
+        # ----- 2. Power OFF the hexapod controller, wait -----
         print(f"Powering OFF hexapod controller (outlet {HEXAPOD_OUTLET})...")
         if not pdu.off(HEXAPOD_OUTLET):
             raise RuntimeError("PDU power OFF failed (state did not become OFF)")
@@ -185,6 +187,7 @@ def main():
         print(f"Waiting {args.off_wait}s...")
         time.sleep(args.off_wait)
 
+        # ----- 3. Power ON the hexapod controller, wait -----
         print(f"Powering ON hexapod controller (outlet {HEXAPOD_OUTLET})...")
         if not pdu.on(HEXAPOD_OUTLET):
             raise RuntimeError("PDU power ON failed (state did not become ON)")
@@ -192,15 +195,45 @@ def main():
         print(f"Waiting {args.on_wait}s...")
         time.sleep(args.on_wait)
 
+        # ----- 4. Restart the EPICS IOC -----
         print("Starting hexapod IOC (via hexapod_IOC.sh)...")
         ioc_start()
 
-        print(f"Waiting for {PV_ALL_ENABLED}=1 (timeout {args.enable_timeout}s)...")
-        if not wait_for_all_enabled(timeout_s=args.enable_timeout, poll_s=2):
-            print(f"{PV_ALL_ENABLED} is not 1; issuing {PV_ENABLE_WORK}=1 and waiting again...")
-            caput(PV_ENABLE_WORK, 1)
-            if not wait_for_all_enabled(timeout_s=args.enable_timeout, poll_s=2):
-                raise RuntimeError(f"{PV_ALL_ENABLED} did not become 1 within timeout")
+        # ----- 5. Verify / enable the hexapod driver -----
+        # First check
+        print(f"Checking {PV_ALL_ENABLED}...")
+        try:
+            val = caget(PV_ALL_ENABLED)
+        except Exception:
+            val = "0"
+
+        if val == "1":
+            print("OK: Hexapod is already enabled (HexapodAllEnabled=1).")
+            return 0
+
+        # Not yet enabled — wait 3 s and check again
+        print(f"{PV_ALL_ENABLED}={val} (disabled); rechecking in 3 s...")
+        time.sleep(3)
+
+        try:
+            val = caget(PV_ALL_ENABLED)
+        except Exception:
+            val = "0"
+
+        if val == "1":
+            print("OK: Hexapod is enabled (HexapodAllEnabled=1).")
+            return 0
+
+        # Still disabled — issue the enable command
+        print(f"{PV_ALL_ENABLED}={val} (still disabled); issuing {PV_ENABLE_WORK}=1 ...")
+        caput(PV_ENABLE_WORK, 1)
+
+        # Poll every 1 s to confirm it becomes enabled
+        print(f"Polling {PV_ALL_ENABLED} every 1 s (timeout {args.enable_timeout} s)...")
+        if not wait_for_all_enabled(timeout_s=args.enable_timeout, poll_s=1):
+            raise RuntimeError(
+                f"{PV_ALL_ENABLED} did not become 1 within {args.enable_timeout} s"
+            )
 
         print("OK: Hexapod is enabled (HexapodAllEnabled=1).")
         return 0
