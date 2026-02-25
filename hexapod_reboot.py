@@ -144,6 +144,30 @@ def caput(pv: str, value):
     subprocess.check_call(["caput", pv, str(value)])
 
 
+def wait_for_pv_connected(pv: str, timeout_s=120, poll_s=3) -> str:
+    """
+    Wait until a PV is reachable via caget.
+    Returns the PV value once connected.
+    Raises RuntimeError if the PV is not reachable within timeout.
+    """
+    deadline = time.time() + timeout_s
+    attempt = 0
+    while time.time() < deadline:
+        attempt += 1
+        try:
+            val = caget(pv)
+            print(f"  PV {pv} is connected (value={val})")
+            return val
+        except Exception:
+            remaining = int(deadline - time.time())
+            print(f"  Waiting for IOC... {pv} not yet available "
+                  f"(attempt {attempt}, {remaining}s remaining)")
+            time.sleep(poll_s)
+    raise RuntimeError(
+        f"PV {pv} did not become reachable within {timeout_s}s — IOC may have failed to start"
+    )
+
+
 def wait_for_all_enabled(timeout_s=180, poll_s=1) -> bool:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
@@ -168,6 +192,7 @@ def main():
     )
     ap.add_argument("--off-wait", type=int, default=10, help="Seconds to wait after power OFF")
     ap.add_argument("--on-wait", type=int, default=10, help="Seconds to wait after power ON")
+    ap.add_argument("--ioc-timeout", type=int, default=120, help="Seconds to wait for IOC PVs to become available")
     ap.add_argument("--enable-timeout", type=int, default=180, help="Seconds to wait for HexapodAllEnabled=1")
     args = ap.parse_args()
 
@@ -199,14 +224,11 @@ def main():
         print("Starting hexapod IOC (via hexapod_IOC.sh)...")
         ioc_start()
 
-        # ----- 5. Verify / enable the hexapod driver -----
-        # First check
-        print(f"Checking {PV_ALL_ENABLED}...")
-        try:
-            val = caget(PV_ALL_ENABLED)
-        except Exception:
-            val = "0"
+        # ----- 5. Wait for IOC PVs to become available -----
+        print(f"Waiting for IOC to fully start (timeout {args.ioc_timeout}s)...")
+        val = wait_for_pv_connected(PV_ALL_ENABLED, timeout_s=args.ioc_timeout, poll_s=3)
 
+        # ----- 6. Verify / enable the hexapod driver -----
         if val == "1":
             print("OK: Hexapod is already enabled (HexapodAllEnabled=1).")
             return 0
@@ -229,10 +251,10 @@ def main():
         caput(PV_ENABLE_WORK, 1)
 
         # Poll every 1 s to confirm it becomes enabled
-        print(f"Polling {PV_ALL_ENABLED} every 1 s (timeout {args.enable_timeout} s)...")
+        print(f"Polling {PV_ALL_ENABLED} every 1 s (timeout {args.enable_timeout}s)...")
         if not wait_for_all_enabled(timeout_s=args.enable_timeout, poll_s=1):
             raise RuntimeError(
-                f"{PV_ALL_ENABLED} did not become 1 within {args.enable_timeout} s"
+                f"{PV_ALL_ENABLED} did not become 1 within {args.enable_timeout}s"
             )
 
         print("OK: Hexapod is enabled (HexapodAllEnabled=1).")
