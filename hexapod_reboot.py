@@ -192,6 +192,7 @@ def main():
     )
     ap.add_argument("--off-wait", type=int, default=10, help="Seconds to wait after power OFF")
     ap.add_argument("--on-wait", type=int, default=10, help="Seconds to wait after power ON")
+    ap.add_argument("--ioc-settle", type=int, default=10, help="Seconds to wait after IOC start before checking PVs")
     ap.add_argument("--ioc-timeout", type=int, default=120, help="Seconds to wait for IOC PVs to become available")
     ap.add_argument("--enable-timeout", type=int, default=180, help="Seconds to wait for HexapodAllEnabled=1")
     args = ap.parse_args()
@@ -224,11 +225,15 @@ def main():
         print("Starting hexapod IOC (via hexapod_IOC.sh)...")
         ioc_start()
 
-        # ----- 5. Wait for IOC PVs to become available -----
-        print(f"Waiting for IOC to fully start (timeout {args.ioc_timeout}s)...")
+        # ----- 5. Let the IOC settle before checking PVs -----
+        print(f"Waiting {args.ioc_settle}s for IOC to settle...")
+        time.sleep(args.ioc_settle)
+
+        # ----- 6. Wait for IOC PVs to become available -----
+        print(f"Waiting for IOC PVs to become available (timeout {args.ioc_timeout}s)...")
         val = wait_for_pv_connected(PV_ALL_ENABLED, timeout_s=args.ioc_timeout, poll_s=3)
 
-        # ----- 6. Verify / enable the hexapod driver -----
+        # ----- 7. Verify / enable the hexapod driver -----
         if val == "1":
             print("OK: Hexapod is already enabled (HexapodAllEnabled=1).")
             return 0
