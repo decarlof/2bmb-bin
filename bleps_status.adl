@@ -1,0 +1,2176 @@
+
+file {
+	name="/home/beams/2BMB/bin/bleps_status.adl"
+	version=030111
+}
+display {
+	object {
+		x=280
+		y=224
+		width=900
+		height=922
+	}
+	clr=14
+	bclr=4
+	cmap=""
+	gridSpacing=5
+	gridOn=0
+	snapToGrid=0
+}
+"color map" {
+	ncolors=65
+	colors {
+		ffffff,
+		ececec,
+		dadada,
+		c8c8c8,
+		bbbbbb,
+		aeaeae,
+		9e9e9e,
+		919191,
+		858585,
+		787878,
+		696969,
+		5a5a5a,
+		464646,
+		2d2d2d,
+		000000,
+		00d800,
+		1ebb00,
+		339900,
+		2d7f00,
+		216c00,
+		fd0000,
+		de1309,
+		be190b,
+		a01207,
+		820400,
+		5893ff,
+		597ee1,
+		4b6ec7,
+		3a5eab,
+		27548d,
+		fbf34a,
+		f9da3c,
+		eeb62b,
+		e19015,
+		cd6100,
+		ffb0ff,
+		d67fe2,
+		ae4ebc,
+		8b1a96,
+		610a75,
+		a4aaff,
+		8793e2,
+		6a73c1,
+		4d52a4,
+		343386,
+		c7bb6d,
+		b79d5c,
+		a47e3c,
+		7d5627,
+		58340f,
+		99ffff,
+		73dfff,
+		4ea5f9,
+		2a63e4,
+		0a00b8,
+		ebf1b5,
+		d4db9d,
+		bbc187,
+		a6a462,
+		8b8239,
+		73ff6b,
+		52da3b,
+		3cb420,
+		289315,
+		1a7309,
+	}
+}
+text {
+	object {
+		x=10
+		y=10
+		width=680
+		height=25
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="2-BM BLEPS - Gate Valves / Mirror Temps / Water Flows"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=45
+		width=330
+		height=15
+	}
+	"basic attribute" {
+		clr=11
+	}
+	textix="ALARMS"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=355
+		y=45
+		width=500
+		height=15
+	}
+	"basic attribute" {
+		clr=11
+	}
+	textix="SHUTTERS"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=347
+		y=63
+		width=2
+		height=64
+	}
+	"basic attribute" {
+		clr=10
+	}
+}
+"message button" {
+	object {
+		x=10
+		y=98
+		width=100
+		height=25
+	}
+	control {
+		chan="$(P)BLEPS:A_FAULT_RESET"
+		clr=0
+		bclr=44
+	}
+	label="Reset FAULT"
+	press_msg="1"
+}
+"message button" {
+	object {
+		x=125
+		y=98
+		width=100
+		height=25
+	}
+	control {
+		chan="$(P)BLEPS:TRIP_RESET"
+		clr=0
+		bclr=44
+	}
+	label="Reset TRIP"
+	press_msg="1"
+}
+rectangle {
+	object {
+		x=10
+		y=63
+		width=100
+		height=30
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:A_FAULT_EXISTS"
+	}
+}
+text {
+	object {
+		x=10
+		y=68
+		width=100
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="FAULT"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=125
+		y=63
+		width=100
+		height=30
+	}
+	"basic attribute" {
+		clr=33
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:A_TRIP_EXISTS"
+	}
+}
+text {
+	object {
+		x=125
+		y=68
+		width=100
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="TRIP"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=240
+		y=63
+		width=100
+		height=30
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:WARNING_EXISTS"
+	}
+}
+text {
+	object {
+		x=240
+		y=68
+		width=100
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="WARNING"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=355
+		y=63
+		width=160
+		height=30
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:BIV_CLOSED"
+	}
+}
+rectangle {
+	object {
+		x=355
+		y=63
+		width=160
+		height=30
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:BIV_CLOSED"
+	}
+}
+text {
+	object {
+		x=355
+		y=68
+		width=160
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:BIV_CLOSED"
+	}
+	textix="BIV - OPEN"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=355
+		y=68
+		width=160
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:BIV_CLOSED"
+	}
+	textix="BIV - CLOSED"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=525
+		y=63
+		width=160
+		height=30
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:FES_CLOSED"
+	}
+}
+rectangle {
+	object {
+		x=525
+		y=63
+		width=160
+		height=30
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:FES_CLOSED"
+	}
+}
+text {
+	object {
+		x=525
+		y=68
+		width=160
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:FES_CLOSED"
+	}
+	textix="FES - OPEN"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=525
+		y=68
+		width=160
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:FES_CLOSED"
+	}
+	textix="FES - CLOSED"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=695
+		y=63
+		width=160
+		height=30
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:SBS_CLOSED"
+	}
+}
+rectangle {
+	object {
+		x=695
+		y=63
+		width=160
+		height=30
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:SBS_CLOSED"
+	}
+}
+text {
+	object {
+		x=695
+		y=68
+		width=160
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:SBS_CLOSED"
+	}
+	textix="SBS - OPEN"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=695
+		y=68
+		width=160
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:SBS_CLOSED"
+	}
+	textix="SBS - CLOSED"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=10
+		y=135
+		width=680
+		height=2
+	}
+	"basic attribute" {
+		clr=14
+	}
+}
+text {
+	object {
+		x=10
+		y=145
+		width=330
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Gate valve (location)"
+}
+text {
+	object {
+		x=531
+		y=145
+		width=70
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="OPENED"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=621
+		y=145
+		width=70
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="CLOSED"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=175
+		width=330
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="GV1    Slits  <->  M1 Mirror"
+}
+rectangle {
+	object {
+		x=531
+		y=172
+		width=70
+		height=24
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:GV1_OPENED_LS"
+	}
+}
+rectangle {
+	object {
+		x=621
+		y=172
+		width=70
+		height=24
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:GV1_CLOSED_LS"
+	}
+}
+text {
+	object {
+		x=10
+		y=210
+		width=330
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="GV2    Windows 2&3  <->  SBS / Station B"
+}
+rectangle {
+	object {
+		x=531
+		y=207
+		width=70
+		height=24
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:GV2_OPENED_LS"
+	}
+}
+rectangle {
+	object {
+		x=621
+		y=207
+		width=70
+		height=24
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:GV2_CLOSED_LS"
+	}
+}
+text {
+	object {
+		x=10
+		y=245
+		width=330
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="GV3    Transport  <->  Station B (Slits / Window 4)"
+}
+rectangle {
+	object {
+		x=531
+		y=242
+		width=70
+		height=24
+	}
+	"basic attribute" {
+		clr=15
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:GV3_OPENED_LS"
+	}
+}
+rectangle {
+	object {
+		x=621
+		y=242
+		width=70
+		height=24
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:GV3_CLOSED_LS"
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=280
+		width=680
+		height=2
+	}
+	"basic attribute" {
+		clr=14
+	}
+}
+text {
+	object {
+		x=10
+		y=290
+		width=680
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="M1 Mirror Tank Temperatures (degC)"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=320
+		width=440
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Channel (location)"
+}
+text {
+	object {
+		x=471
+		y=320
+		width=100
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Current"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=581
+		y=320
+		width=110
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Trip limit"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=345
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Temp1    M1 mirror - Lower thermocouple"
+}
+"text update" {
+	object {
+		x=471
+		y=345
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:TEMP1_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=345
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:TEMP1_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=370
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Temp2    M1 mirror - Middle thermocouple"
+}
+"text update" {
+	object {
+		x=471
+		y=370
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:TEMP2_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=370
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:TEMP2_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=395
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Temp3    M1 mirror - Upper thermocouple"
+}
+"text update" {
+	object {
+		x=471
+		y=395
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:TEMP3_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=395
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:TEMP3_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=425
+		width=680
+		height=2
+	}
+	"basic attribute" {
+		clr=14
+	}
+}
+text {
+	object {
+		x=10
+		y=435
+		width=680
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Cooling Water Flows (gpm)"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=465
+		width=440
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Channel (cooled components)"
+}
+text {
+	object {
+		x=471
+		y=465
+		width=100
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Current"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=581
+		y=465
+		width=110
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Trip floor"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=490
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow1    Filter / Slits"
+}
+"text update" {
+	object {
+		x=471
+		y=490
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW1_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=490
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW1_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=515
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow2    M1 Mirror / DMM"
+}
+"text update" {
+	object {
+		x=471
+		y=515
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW2_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=515
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW2_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=540
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow3    Window 1 / Missteer Mask"
+}
+"text update" {
+	object {
+		x=471
+		y=540
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW3_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=540
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW3_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=565
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow4    Windows 2 & 3"
+}
+"text update" {
+	object {
+		x=471
+		y=565
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW4_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=565
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW4_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=590
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow5    White Beam Mask / SBS Shutter"
+}
+"text update" {
+	object {
+		x=471
+		y=590
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW5_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=590
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW5_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=615
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow6    Station B entrance slits"
+}
+"text update" {
+	object {
+		x=471
+		y=615
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW6_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=615
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW6_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=640
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow7    Window 4 (Station B)"
+}
+"text update" {
+	object {
+		x=471
+		y=640
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW7_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=640
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW7_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=665
+		width=440
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Flow8    Station B Photon Stop"
+}
+"text update" {
+	object {
+		x=471
+		y=665
+		width=100
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW8_CURRENT"
+		clr=54
+		bclr=2
+	}
+	clrmod="alarm"
+	align="horiz. centered"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=581
+		y=665
+		width=110
+		height=20
+	}
+	monitor {
+		chan="$(P)BLEPS:FLOW8_SET_POINT"
+		clr=14
+		bclr=2
+	}
+	align="horiz. centered"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=700
+		width=680
+		height=18
+	}
+	"basic attribute" {
+		clr=11
+	}
+	textix="Shutters: green = open, red = closed   |   Alarms: gray = OK, colored = active"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=720
+		width=680
+		height=18
+	}
+	"basic attribute" {
+		clr=11
+	}
+	textix="Launch:  medm -x -macro \"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=10
+		y=745
+		width=680
+		height=2
+	}
+	"basic attribute" {
+		clr=14
+	}
+}
+text {
+	object {
+		x=10
+		y=752
+		width=680
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Vacuum monitoring - green = OK, yellow = latched warning, red = BAD"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=787
+		width=100
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Ion pumps"
+}
+rectangle {
+	object {
+		x=120
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=120
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP1_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=120
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP1_STATUS"
+	}
+}
+text {
+	object {
+		x=120
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="1"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=175
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=175
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP2_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=175
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP2_STATUS"
+	}
+}
+text {
+	object {
+		x=175
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="2"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=230
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=230
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP3_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=230
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP3_STATUS"
+	}
+}
+text {
+	object {
+		x=230
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="3"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=285
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=285
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP4_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=285
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP4_STATUS"
+	}
+}
+text {
+	object {
+		x=285
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="4"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=340
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=340
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP5_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=340
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP5_STATUS"
+	}
+}
+text {
+	object {
+		x=340
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="5"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=395
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=395
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP6_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=395
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP6_STATUS"
+	}
+}
+text {
+	object {
+		x=395
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="6"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=450
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=450
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IP7_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=450
+		y=782
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IP7_STATUS"
+	}
+}
+text {
+	object {
+		x=450
+		y=786
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="7"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=822
+		width=100
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Ion gauges"
+}
+rectangle {
+	object {
+		x=120
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=120
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG1_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=120
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG1_STATUS"
+	}
+}
+text {
+	object {
+		x=120
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="1"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=175
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=175
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG2_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=175
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG2_STATUS"
+	}
+}
+text {
+	object {
+		x=175
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="2"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=230
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=230
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG3_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=230
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG3_STATUS"
+	}
+}
+text {
+	object {
+		x=230
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="3"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=285
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=285
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG4_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=285
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG4_STATUS"
+	}
+}
+text {
+	object {
+		x=285
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="4"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=340
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=340
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG5_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=340
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG5_STATUS"
+	}
+}
+text {
+	object {
+		x=340
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="5"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=395
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=395
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG6_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=395
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG6_STATUS"
+	}
+}
+text {
+	object {
+		x=395
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="6"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=450
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=450
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG7_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=450
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG7_STATUS"
+	}
+}
+text {
+	object {
+		x=450
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="7"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=505
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=15
+	}
+}
+rectangle {
+	object {
+		x=505
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)BLEPS:IG8_WARNING"
+	}
+}
+rectangle {
+	object {
+		x=505
+		y=817
+		width=50
+		height=25
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if zero"
+		chan="$(P)BLEPS:IG8_STATUS"
+	}
+}
+text {
+	object {
+		x=505
+		y=821
+		width=50
+		height=18
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="8"
+	align="horiz. centered"
+}
+rectangle {
+	object {
+		x=10
+		y=860
+		width=680
+		height=2
+	}
+	"basic attribute" {
+		clr=14
+	}
+}
+"shell command" {
+	object {
+		x=3
+		y=872
+		width=50
+		height=30
+	}
+	command[0] {
+		label="BLEPS IOC"
+		name="bash /home/beams/2BMB/bin/bleps_IOC_stop.sh"
+	}
+	clr=0
+	bclr=20
+	label="-Stop"
+}
+"shell command" {
+	object {
+		x=55
+		y=872
+		width=240
+		height=30
+	}
+	command[0] {
+		label="BLEPS IOC"
+		name="bash /home/beams/2BMB/bin/bleps_IOC.sh"
+	}
+	clr=0
+	bclr=49
+	label="-BLEPS IOC"
+}
+text {
+	object {
+		x=305
+		y=877
+		width=385
+		height=20
+	}
+	"basic attribute" {
+		clr=11
+	}
+	textix="Runs on arcturus (2bmb)"
+}
