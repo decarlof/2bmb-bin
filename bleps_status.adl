@@ -1,12 +1,12 @@
 
 file {
-	name="/home/beams/2BMB/bin/bleps_status.adl"
+	name="/home/beams0/2BMB/bin/bleps_status.adl"
 	version=030111
 }
 display {
 	object {
-		x=280
-		y=224
+		x=1895
+		y=713
 		width=900
 		height=922
 	}
@@ -1248,19 +1248,6 @@ text {
 		clr=11
 	}
 	textix="Shutters: green = open, red = closed   |   Alarms: gray = OK, colored = active"
-	align="horiz. centered"
-}
-text {
-	object {
-		x=10
-		y=720
-		width=680
-		height=18
-	}
-	"basic attribute" {
-		clr=11
-	}
-	textix="Launch:  medm -x -macro \"
 	align="horiz. centered"
 }
 rectangle {
