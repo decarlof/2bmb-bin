@@ -1,0 +1,17 @@
+#!/bin/csh
+
+setenv EPICS_APP_MCTOPTICS /home/beams/2BMB/epics/synApps/support/mctoptics/
+
+set output = `perl $EPICS_APP_2BMB/release.pl $EPICS_APP_2BMB`
+$output
+
+#####################
+# prepare MEDM path
+#
+if (! ${?EPICS_DISPLAY_PATH}) setenv EPICS_DISPLAY_PATH '.'
+setenv EPICS_DISPLAY_PATH $EPICS_DISPLAY_PATH':'$EPICS_APP_MCTOPTICS/mctOpticsApp/op/adl
+
+medm -x -macro "P=JenaNV100D:,M1=jena1:,M2=jena2:,P1=2bmb:,M20=m26,M21=m27" JenaNV100D.adl &
+
+
+
